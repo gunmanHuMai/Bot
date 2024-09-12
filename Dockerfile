@@ -1,4 +1,4 @@
-FROM node:18.18.2-slim
+FROM node:18.20.3-slim
 
 WORKDIR /bot
 COPY . .
