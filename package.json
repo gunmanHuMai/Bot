@@ -4,8 +4,8 @@
     "description": "Discord Music Bot",
     "main": "./src/index.ts",
     "scripts": {
+        "build": "tsc",
         "start": "npm run build && node ./dist/src/index.js",
-        "build": "npx tsc",
         "dev": "ts-node ./src/index.ts",
         "lint": "eslint . --ext .ts --color"
     },
