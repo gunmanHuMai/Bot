@@ -25,14 +25,15 @@ export class Logger extends EventEmitter {
             'l': String(now.getMilliseconds()).padStart(3, '0'),
         };
 
-        const formattedTime = this.formatTokens.reduce(
-            (result, token) => result.replace(token, timeValues[token]),
-            this.format
-        );
+        let formattedTime = this.format;
+        this.formatTokens.forEach(token => {
+            const value = timeValues[token] || '';
+            formattedTime = formattedTime.replace(token, value);
+        });
 
         if (this.formatTokens.includes('hh')) {
             const period = Number(timeValues['HH']) < 12 ? 'AM' : 'PM';
-            return `${formattedTime} ${period}`;
+            formattedTime = `${formattedTime} ${period}`;
         }
 
         return `[${formattedTime}]`;
@@ -41,7 +42,7 @@ export class Logger extends EventEmitter {
     public parseFormatTokens(): string[] {
         const timeTokenRegex = /(yyyy|mm|dd|HH|hh|MM|ss|l)/g;
         const matches = this.format.match(timeTokenRegex);
-        return matches ? matches : [];
+        return matches ? Array.from(new Set(matches)) : [];
     }
 
     private addLog(message: string): void {
@@ -49,37 +50,37 @@ export class Logger extends EventEmitter {
     }
 
     private setListener() {
-        this.on('api', (message: string) => {
+        EventEmitter.on('api', (message: string) => {
             const msg = `${this.getFormatTime()} [api] ${message}`;
             this.addLog(msg);
             console.log(msg);
         });
 
-        this.on('error', (message: string) => {
+        EventEmitter.on('error', (message: string) => {
             const msg = `${this.getFormatTime()} [error] ${message}`;
             this.addLog(msg);
             console.log(msg);
         });
 
-        this.on('lavashark', (message: string) => {
+        EventEmitter.on('lavashark', (message: string) => {
             const msg = `${this.getFormatTime()} [lavashark] ${message}`;
             this.addLog(msg);
             console.log(msg);
         });
 
-        this.on('localNode', (message: string) => {
+        EventEmitter.on('localNode', (message: string) => {
             const msg = `${this.getFormatTime()} [localNode] ${message}`;
             this.addLog(msg);
             console.log(msg);
         });
 
-        this.on('log', (message: string) => {
+        EventEmitter.on('log', (message: string) => {
             const msg = `${this.getFormatTime()} ${message}`;
             this.addLog(msg);
             console.log(msg);
         });
 
-        this.on('discord', (message: string) => {
+        EventEmitter.on('discord', (message: string) => {
             const msg = `${this.getFormatTime()} [discord] ${message}`;
             this.addLog(msg);
             console.log(msg);
