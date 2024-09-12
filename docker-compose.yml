@@ -40,8 +40,6 @@ services:
       # Local Lavalink node
       ENABLE_LOCAL_NODE: false
       LOCAL_NODE_AUTO_RESTART: true
-    build:
-      context: /server/docker-compose.yml  # Path to the build context directory
     volumes:
       - ./server:/bot/server    # localnode configuration file
       - ./nodelist.json:/bot/nodelist.json
