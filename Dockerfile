@@ -10,7 +10,10 @@ COPY . .
 # Install Java and Node.js dependencies
 RUN apt update -y && \
     apt install openjdk-17-jdk -y && \
-    npm install
+    npm install -g npm@10.8.3 \
+    npm install \
+    npm install --global typescript@5.6.2
+    
 
 # Ensure TypeScript binaries have execution permissions
 RUN chmod +x ./node_modules/.bin/tsc
