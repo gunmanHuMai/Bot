@@ -218,8 +218,8 @@ export class LocalNodeController {
             // Calculate and log download progress
             if (contentLength) {
                 const progress = (downloadedBytes / contentLength) * 100;
-                readline.clearLine(process.stdout, 0);
-                readline.cursorTo(process.stdout, 0);
+                readline.clearLine(process.stdout as any, 0);
+                readline.cursorTo(process.stdout as any, 0);
                 process.stdout.write(`Download Progress: ${~~progress} % (${formatBytes(downloadedBytes)} / ${tragetSize})`);
             }
         }

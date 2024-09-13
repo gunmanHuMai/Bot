@@ -16,6 +16,9 @@ export interface LoggerEvents {
 }
 
 export class Logger extends EventEmitter implements LoggerEvents {
+    emit(arg0: string, arg1: string): any {
+        throw new Error("Method not implemented.");
+    }
     public logs: string[];
     public format: string;
 
